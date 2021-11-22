@@ -21,7 +21,6 @@ services:
      - 443:443
     environment:
       - NGINX_HOST=${PUBLIC_IP}
-      - APP_PORT=3001
     networks:
       - mynet
 networks:
