@@ -60,6 +60,10 @@ pipeline {
 
             def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME} ${TG_BOT_TOKEN} ${EC2_PUBLIC_IP}"
 				    def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
+            def botUrl = "url=https://${EC2_PUBLIC_IP}/"
+            def certPath = "certificate=@/home/ec2-user/cert/public.pem"
+            def curlCmd = "curl -F ${botUrl} -F ${certPath} https://api.telegram.org/bot${TG_BOT_TOKEN}/setWebhook"
+
 
 				    sshagent(['my-ssh-key']) {
               sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} 'mkdir -p /home/ec2-user/cert'"
@@ -76,7 +80,7 @@ pipeline {
               sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
 				      sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
 							sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
-              sh "curl -F 'url=https://${EC2_PUBLIC_IP}/' -F 'certificate=@/home/ec2-user/cert/public.pem' https://api.telegram.org/bot${TG_BOT_TOKEN}/setWebhook"
+              sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${curlCmd}"
 				    }
 
             echo "APP IS READY AT: http://${EC2_PUBLIC_IP}"
