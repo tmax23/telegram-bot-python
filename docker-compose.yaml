@@ -19,8 +19,6 @@ services:
      - ./cert:/etc/nginx/cert
     ports:
      - 443:443
-    environment:
-      - NGINX_HOST=${PUBLIC_IP}
     networks:
       - mynet
 networks:
