@@ -60,23 +60,17 @@ pipeline {
 
             def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME} ${TG_BOT_TOKEN} ${EC2_PUBLIC_IP}"
 				    def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
+            def subj = "/C=US/ST=Barnaul/L=Altay/O=None/CN=${EC2_PUBLIC_IP}"
             def botUrl = "url=https://${EC2_PUBLIC_IP}/"
             def certPath = "certificate=@/home/ec2-user/cert/public.pem"
             def curlCmd = "curl -F ${botUrl} -F ${certPath} https://api.telegram.org/bot${TG_BOT_TOKEN}/setWebhook"
-
+            def opensslCmd = "openssl req -newkey rsa:2048 -sha256 -nodes -keyout ./cert/private.key -x509 -days 365 -out ./cert/public.pem -subj ${subj}"
 
 				    sshagent(['my-ssh-key']) {
               sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} 'mkdir -p /home/ec2-user/cert'"
               sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} 'mkdir -p /home/ec2-user/nginx'"
               sh "scp -o StrictHostKeyChecking=no ./nginx/mybot.conf ${ec2Instance}:/home/ec2-user/nginx/mybot.conf"
-
-              withCredentials([file(credentialsId: 'private-key-nginx-tg-bot', variable: 'private')]) {
-                sh "cat \$private > ./private.key"
-              }
-              sh "chmod 644 ./private.key"
-              sh "scp -o StrictHostKeyChecking=no ./private.key ${ec2Instance}:/home/ec2-user/cert/private.key"
-
-              sh "scp -o StrictHostKeyChecking=no ./cert/public.pem ${ec2Instance}:/home/ec2-user/cert/public.pem"
+              sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${opensslCmd}"
               sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
 				      sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
 							sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
