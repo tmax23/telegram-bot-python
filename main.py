@@ -18,7 +18,7 @@ WEBHOOK_PATH = '/Max1stBot'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 # webserver settings
-WEBAPP_HOST = '18.224.183.33'  # or ip
+WEBAPP_HOST = 'localhost'  # or ip
 WEBAPP_PORT = 88
 
 logging.basicConfig(level=logging.INFO)
