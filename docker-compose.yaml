@@ -4,8 +4,6 @@ services:
     image: ${IMAGE}
     restart: unless-stopped
     container_name: tg-bot-py
-    ports:
-     - 3001:3001
     environment:
       - ENV_API_TOKEN=${TOKEN}
     networks:
@@ -21,7 +19,6 @@ services:
      - ./cert:/etc/nginx/cert
     ports:
      - 443:443
-     - 3001:3001
     environment:
       - NGINX_HOST=${PUBLIC_IP}
       - APP_PORT=3001
