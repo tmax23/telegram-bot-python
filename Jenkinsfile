@@ -67,8 +67,11 @@ pipeline {
               sh "scp -o StrictHostKeyChecking=no ./nginx/mybot.conf ${ec2Instance}:/home/ec2-user/nginx/mybot.conf"
 
               withCredentials([file(credentialsId: 'private-key-nginx-tg-bot', variable: 'private')]) {
-                sh "scp -o StrictHostKeyChecking=no \$private ${ec2Instance}:/home/ec2-user/cert/private.key"
+                sh "cat \$private > ./private.key"
               }
+              sh "chmod 644 ./private.key"
+              sh "scp -o StrictHostKeyChecking=no ./private.key ${ec2Instance}:/home/ec2-user/cert/private.key"
+
               sh "scp -o StrictHostKeyChecking=no ./cert/public.pem ${ec2Instance}:/home/ec2-user/cert/public.pem"
               sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
 				      sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
