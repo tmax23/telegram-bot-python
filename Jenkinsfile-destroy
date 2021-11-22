@@ -12,11 +12,7 @@ pipeline {
       steps {
         script {
           dir ('terraform') {
-            sh "terraform init"
-            EC2_STATUS = sh(
-              script: "terraform apply -auto-approve",
-              returnStdout: true
-              ).trim()
+            sh "terraform destroy -auto-approve"
           }
         }
       }
