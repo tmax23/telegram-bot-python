@@ -58,7 +58,7 @@ pipeline {
               }
             hasMatch = null
 
-            def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
+            def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME} ${TG_BOT_TOKEN} ${EC2_PUBLIC_IP}"
 				    def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
 
 				    sshagent(['my-ssh-key']) {

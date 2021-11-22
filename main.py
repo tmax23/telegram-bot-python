@@ -13,12 +13,12 @@ load_dotenv()
 API_TOKEN = os.environ['ENV_API_TOKEN']
 
 # webhook settings
-WEBHOOK_HOST = 'https://18.224.183.33'
+WEBHOOK_HOST = 'https://3.135.190.166'
 WEBHOOK_PATH = '/'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 # webserver settings
-WEBAPP_HOST = 'localhost'  # or ip
+WEBAPP_HOST = 'tg-bot-py'  # or ip
 WEBAPP_PORT = 3001
 
 logging.basicConfig(level=logging.INFO)

@@ -4,6 +4,7 @@ venv/
 
 .idea/
 
+**/private.key
 **/.terraform/
 **/*.tfstate
 **/*.tfstate.*

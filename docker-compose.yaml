@@ -7,14 +7,14 @@ services:
     ports:
      - 3001:3001
     environment:
-      - ENV_API_TOKEN=${TG_BOT_TOKEN}
+      - ENV_API_TOKEN=${TOKEN}
     networks:
       - mynet
   nginx:
     image: nginx:1.21
     depends_on:
       - tg-bot-py
-    container_name: nginx
+    container_name: nginx-server
     restart: unless-stopped
     volumes:
      - ./nginx:/etc/nginx/conf.d
@@ -23,7 +23,7 @@ services:
      - 443:443
      - 3001:3001
     environment:
-      - NGINX_HOST=${EC2_PUBLIC_IP}
+      - NGINX_HOST=${PUBLIC_IP}
       - APP_PORT=3001
     networks:
       - mynet
