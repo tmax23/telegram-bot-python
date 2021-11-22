@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  tg-bot-py:
+    image: ${IMAGE}
+    restart: unless-stopped
+    container_name: tg-bot-py
+    ports:
+     - 3001:3001
+    environment:
+      - ENV_API_TOKEN=${TG_BOT_TOKEN}
+    networks:
+      - mynet
+  nginx:
+    image: nginx:1.21
+    depends_on:
+      - tg-bot-py
+    container_name: nginx
+    restart: unless-stopped
+    volumes:
+     - ./nginx:/etc/nginx/conf.d
+     - ./cert:/etc/nginx/cert
+    ports:
+     - 443:443
+     - 3001:3001
+    environment:
+      - NGINX_HOST=${EC2_PUBLIC_IP}
+      - APP_PORT=3001
+    networks:
+      - mynet
+networks:
+  mynet:
+    driver: bridge
