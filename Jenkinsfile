@@ -64,6 +64,7 @@ pipeline {
             def botUrl = "url=https://${EC2_PUBLIC_IP}/"
             def certPath = "certificate=@/home/ec2-user/cert/public.pem"
             def curlCmd = "curl -F ${botUrl} -F ${certPath} https://api.telegram.org/bot${TG_BOT_TOKEN}/setWebhook"
+            def curlCmdClean = "curl -F "url=" https://api.telegram.org/bot${TG_BOT_TOKEN}/setWebhook"
             def opensslCmd = "openssl req -newkey rsa:2048 -sha256 -nodes -keyout ./cert/private.key -x509 -days 365 -out ./cert/public.pem -subj ${subj}"
 
 				    sshagent(['my-ssh-key']) {
@@ -74,6 +75,7 @@ pipeline {
               sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
 				      sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user"
 							sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
+              sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${curlCmdClean}"
               sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${curlCmd}"
 				    }
 
