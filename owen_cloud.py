@@ -36,5 +36,5 @@ def get_temperature(token):
     par_6 = resp.json()[6]['values'][0]['v']
 
     degree_sign = u"\N{DEGREE SIGN}"
-    f"---\n"
+
     return f"My ATP, Barnaul, G. Isakova 175:\n" f"Time of last parameters update: {date_last_update}\n" f"---\n" f"Запуск/останов контура: {par_0}\n" f"Датчик аварии насосов (Вх. С5): {par_1}\n" f"Авария (Вых. 6): {par_2}\n" f"Т наружного воздуха: {par_3}{degree_sign}C\n" f"Т подачи: {par_4}{degree_sign}C\n" f"Т подачи по графику: {par_5}{degree_sign}C\n" f"Т обратки: {par_6}{degree_sign}C\n" f"---\n"

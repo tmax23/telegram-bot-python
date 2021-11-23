@@ -22,7 +22,7 @@ WEBHOOK_PATH = '/'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 # webserver settings
-WEBAPP_HOST = 'tg-bot-py'  # or ip
+WEBAPP_HOST = 'localhost'  # tg-bot-py or localhost
 WEBAPP_PORT = 3001
 
 logging.basicConfig(level=logging.INFO)
