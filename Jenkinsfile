@@ -70,7 +70,9 @@ pipeline {
             def curlCmdClean = "curl -F 'url=' https://api.telegram.org/bot${TG_BOT_TOKEN}/setWebhook"
             def opensslCmd = "openssl req -newkey rsa:2048 -sha256 -nodes -keyout ./cert/private.key -x509 -days 365 -out ./cert/public.pem -subj ${subj}"
 
-				    sshagent(['my-ssh-key']) {
+              sh "echo 'EC2_IP_ADDRESS=${EC2_PUBLIC_IP}' >> ./.env"
+
+            sshagent(['my-ssh-key']) {
               sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} 'mkdir -p /home/ec2-user/cert'"
               sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} 'mkdir -p /home/ec2-user/nginx'"
               sh "scp -o StrictHostKeyChecking=no ./nginx/mybot.conf ${ec2Instance}:/home/ec2-user/nginx/mybot.conf"

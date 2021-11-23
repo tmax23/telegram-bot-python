@@ -13,6 +13,8 @@ services:
     depends_on:
       - tg-bot-py
     container_name: nginx-server
+    environment:
+      - EC2_IP_ADDRESS=${PUBLIC_IP}
     restart: unless-stopped
     volumes:
      - ./nginx:/etc/nginx/conf.d

@@ -14,9 +14,10 @@ load_dotenv()
 
 API_TOKEN = os.environ['ENV_API_TOKEN']
 owen_token = os.environ['OWEN_API_TOKEN']
+host_ip_addr = os.environ['EC2_IP_ADDRESS']
 
 # webhook settings
-WEBHOOK_HOST = 'https://3.143.4.211'
+WEBHOOK_HOST = host_ip_addr
 WEBHOOK_PATH = '/'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
