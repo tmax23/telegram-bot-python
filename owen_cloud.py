@@ -8,7 +8,7 @@ def get_temperature():
     headers = CaseInsensitiveDict()
     headers["Host"] = "api.owencloud.ru"
     headers["Accept"] = "*/*"
-    headers["Authorization"] = "Bearer ThmZmZlYjUzMjg5NWMwNTUyZ"
+    headers["Authorization"] = "Bearer mMwNjU3NDM5ZWJkOTZlMGE1O"
     headers["Content-Length"] = "25"
     headers["Content-Type"] = "application/json"
 
