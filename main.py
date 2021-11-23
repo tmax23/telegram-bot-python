@@ -32,13 +32,11 @@ dp = Dispatcher(bot)
 dp.middleware.setup(LoggingMiddleware())
 
 
-# @dp.message_handler()
-# async def echo(message: types.Message):
-#     # Regular request
-#     # await bot.send_message(message.chat.id, message.text)
-#
-#     # or reply INTO webhook
-#     return SendMessage(message.chat.id, message.text)
+@dp.message_handler(commands='help')
+async def create_deeplink(message: types.Message):
+    msg1 = f"Hello user, your ID is {message.chat.id}\n"
+    msg2 = f"У меня пока только одна команда - /myatp\n"
+    return SendMessage(message.chat.id, msg1+msg2)
 
 
 @dp.message_handler(commands='myatp')
