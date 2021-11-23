@@ -39,7 +39,7 @@ dp.middleware.setup(LoggingMiddleware())
 #     return SendMessage(message.chat.id, message.text)
 
 
-@dp.message_handler(commands='temp')
+@dp.message_handler(commands='myatp')
 async def create_deeplink(message: types.Message):
     data = owen_cloud.get_temperature()
     return SendMessage(message.chat.id, data)
