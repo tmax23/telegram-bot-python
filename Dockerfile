@@ -7,5 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY main.py .
 COPY .env .
+COPY owen_cloud.py .
 
 CMD [ "python3.8", "./main.py" ]
