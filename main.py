@@ -2,6 +2,8 @@ import logging
 import os
 from dotenv import load_dotenv
 
+import owen_cloud
+
 from aiogram import Bot, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.dispatcher import Dispatcher
@@ -35,6 +37,12 @@ async def echo(message: types.Message):
 
     # or reply INTO webhook
     return SendMessage(message.chat.id, message.text)
+
+
+@dp.message_handler(commands='temp')
+async def create_deeplink(message: types.Message):
+    data = owen_cloud.get_temperature()
+    return SendMessage(message.chat.id, data)
 
 
 async def on_startup(dp):
