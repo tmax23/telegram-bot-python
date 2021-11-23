@@ -1,4 +1,3 @@
-#from config_dev import *
 from config import *
 
 import logging
