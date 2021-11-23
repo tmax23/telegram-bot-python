@@ -41,6 +41,7 @@ pipeline {
           sh "echo 'TELEGRAM_API_TOKEN=${TG_BOT_TOKEN}' > ./.env"
           sh "echo 'OWEN_API_TOKEN=${OWEN_API_TOKEN}' >> ./.env"
           sh "echo 'EC2_IP_ADDRESS=${EC2_PUBLIC_IP}' >> ./.env"
+          sh "echo 'ENV=prod' >> ./.env"
 
           withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
             sh "docker build -t ${IMAGE_NAME} ."

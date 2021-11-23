@@ -5,12 +5,22 @@ load_dotenv()
 
 TELEGRAM_TOKEN = os.environ['TELEGRAM_API_TOKEN']
 OWEN_TOKEN = os.environ['OWEN_API_TOKEN']
+EXT_IP = os.environ['EC2_IP_ADDRESS']
+ENV = os.environ['ENV']
 
 # webhook settings
-WEBHOOK_HOST = 'https://edf4-37-23-44-206.ngrok.io'
+if ENV == "dev":
+    WEBHOOK_HOST = 'https://edf4-37-23-44-206.ngrok.io'
+else:
+    WEBHOOK_HOST = EXT_IP
+
 WEBHOOK_PATH = '/'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 # webserver settings
-WEBAPP_HOST = 'localhost'
+if ENV == "dev":
+    WEBAPP_HOST = 'localhost'
+else:
+    WEBAPP_HOST = 'tg-bot-py'
+
 WEBAPP_PORT = 3001

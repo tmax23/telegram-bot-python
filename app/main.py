@@ -1,5 +1,5 @@
 #from config_dev import *
-from config_prod import *
+from config import *
 
 import logging
 import owen_cloud
