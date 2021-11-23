@@ -25,10 +25,21 @@ def get_atp(token):
                   }
 
     degree_sign = u"\N{DEGREE SIGN}"
-    ts = int(resp.json()[0]['values'][0]['d'])+7*3600
+    ts = int(resp.json()[0]['values'][0]['d']) + 7 * 3600
     date_last_update = datetime.utcfromtimestamp(ts).strftime('%d.%m.%Y %H:%M')
 
-    par_00 = name_param[str(resp.json()[0]["id"])]
+    # pars = []
+    #
+    # for ind, item in enumerate(resp.json()):
+    #     id = name_param[str(resp.json()[ind]['id'])]
+    #     value = resp.json()[id]['values'][0]['v']
+    #     pars.append({
+    #         'id': id,
+    #         'value': value
+    #     })
+
+
+    par_00 = name_param[str(resp.json()[0]['id'])]
     par_01 = name_param[str(resp.json()[1]['id'])]
     par_02 = name_param[str(resp.json()[2]['id'])]
     par_03 = name_param[str(resp.json()[3]['id'])]
