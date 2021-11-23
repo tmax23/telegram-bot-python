@@ -38,7 +38,7 @@ pipeline {
     stage('Build docker image') {
       steps {
         script {
-          sh "echo 'ENV_API_TOKEN=${TG_BOT_TOKEN}' > ./.env"
+          sh "echo 'TELEGRAM_API_TOKEN=${TG_BOT_TOKEN}' > ./.env"
           sh "echo 'OWEN_API_TOKEN=${OWEN_API_TOKEN}' >> ./.env"
           sh "echo 'EC2_IP_ADDRESS=${EC2_PUBLIC_IP}' >> ./.env"
 
@@ -62,7 +62,7 @@ pipeline {
               }
             hasMatch = null
 
-            def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME} ${TG_BOT_TOKEN} ${EC2_PUBLIC_IP}"
+            def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME} ${EC2_PUBLIC_IP}"
 				    def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
             def subj = "/C=US/ST=Barnaul/L=Altay/O=None/CN=${EC2_PUBLIC_IP}"
             def botUrl = "url=https://${EC2_PUBLIC_IP}/"

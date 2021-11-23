@@ -1,6 +1,7 @@
 import requests
 from requests.structures import CaseInsensitiveDict
 from datetime import datetime
+
 """
 0 Запуск/останов контура - "id": 1123759
 1 Датчик аварии насосов (Вх. С5) - "id": 1123741
@@ -12,7 +13,7 @@ from datetime import datetime
 """
 
 
-def get_temperature(token):
+def get_atp(token):
     url = "https://api.owencloud.ru/v1/parameters/last-data"
     headers = CaseInsensitiveDict()
     headers["Host"] = "api.owencloud.ru"
@@ -24,8 +25,8 @@ def get_temperature(token):
     data = '{"ids":[1123759,1123741,1123749,1123743,1123747,1123757,1123745]}'
     resp = requests.post(url, headers=headers, data=data)
 
-    ts = int(resp.json()[0]['values'][0]['d'])+25200
-    date_last_update = datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+    ts = int(resp.json()[0]['values'][0]['d'])+7*3600
+    date_last_update = datetime.utcfromtimestamp(ts).strftime('%d.%m.%Y %H:%M')
 
     par_0 = resp.json()[0]['values'][0]['v']
     par_1 = resp.json()[1]['values'][0]['v']
@@ -37,4 +38,4 @@ def get_temperature(token):
 
     degree_sign = u"\N{DEGREE SIGN}"
 
-    return f"My ATP, Barnaul, G. Isakova 175:\n" f"Time of last parameters update: {date_last_update}\n" f"---\n" f"Запуск/останов контура: {par_0}\n" f"Датчик аварии насосов (Вх. С5): {par_1}\n" f"Авария (Вых. 6): {par_2}\n" f"Т наружного воздуха: {par_3}{degree_sign}C\n" f"Т подачи: {par_4}{degree_sign}C\n" f"Т подачи по графику: {par_5}{degree_sign}C\n" f"Т обратки: {par_6}{degree_sign}C\n" f"---\n"
+    return f"АТП, г. Барнаул, ул. Г.Исакова, д. 175\n" f"Время последнего обновления параметров: {date_last_update}\n" f"---\n" f"Запуск/останов контура: {par_0}\n" f"Датчик аварии насосов (Вх. С5): {par_1}\n" f"Авария (Вых. 6): {par_2}\n" f"Т наружного воздуха: {par_3}{degree_sign}C\n" f"Т подачи: {par_4}{degree_sign}C\n" f"Т подачи по графику: {par_5}{degree_sign}C\n" f"Т обратки: {par_6}{degree_sign}C\n" f"---\n"

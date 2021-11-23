@@ -4,8 +4,6 @@ services:
     image: ${IMAGE}
     restart: unless-stopped
     container_name: tg-bot-py
-    environment:
-      - ENV_API_TOKEN=${TOKEN}
     networks:
       - mynet
   nginx:
