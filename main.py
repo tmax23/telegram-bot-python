@@ -13,6 +13,7 @@ from aiogram.utils.executor import start_webhook
 load_dotenv()
 
 API_TOKEN = os.environ['ENV_API_TOKEN']
+owen_token = os.environ['OWEN_API_TOKEN']
 
 # webhook settings
 WEBHOOK_HOST = 'https://3.143.4.211'
@@ -41,7 +42,7 @@ dp.middleware.setup(LoggingMiddleware())
 
 @dp.message_handler(commands='myatp')
 async def create_deeplink(message: types.Message):
-    data = owen_cloud.get_temperature()
+    data = owen_cloud.get_temperature(owen_token)
     return SendMessage(message.chat.id, data)
 
 

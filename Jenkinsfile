@@ -5,6 +5,7 @@ pipeline {
 	environment {
 	  IMAGE_NAME = 'tmax23/tg-bot-py:latest'
     TG_BOT_TOKEN = credentials('tg-bot-token')
+    OWEN_API_TOKEN = credentials('owen-token')
 	}
 
   stages {
@@ -13,6 +14,8 @@ pipeline {
       steps {
         script {
           sh "echo 'ENV_API_TOKEN=${TG_BOT_TOKEN}' > ./.env"
+          sh "echo 'OWEN_API_TOKEN=${OWEN_API_TOKEN}' >> ./.env"
+
           withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
             sh "docker build -t ${IMAGE_NAME} ."
             sh "echo $PASS | docker login -u $USER --password-stdin"

@@ -12,12 +12,12 @@ from datetime import datetime
 """
 
 
-def get_temperature():
+def get_temperature(token):
     url = "https://api.owencloud.ru/v1/parameters/last-data"
     headers = CaseInsensitiveDict()
     headers["Host"] = "api.owencloud.ru"
     headers["Accept"] = "*/*"
-    headers["Authorization"] = "Bearer mMwNjU3NDM5ZWJkOTZlMGE1O"
+    headers["Authorization"] = f"Bearer {token}"
     headers["Content-Length"] = "25"
     headers["Content-Type"] = "application/json"
 
@@ -38,6 +38,3 @@ def get_temperature():
     degree_sign = u"\N{DEGREE SIGN}"
     f"---\n"
     return f"My ATP, Barnaul, G. Isakova 175:\n" f"Time of last parameters update: {date_last_update}\n" f"---\n" f"Запуск/останов контура: {par_0}\n" f"Датчик аварии насосов (Вх. С5): {par_1}\n" f"Авария (Вых. 6): {par_2}\n" f"Т наружного воздуха: {par_3}{degree_sign}C\n" f"Т подачи: {par_4}{degree_sign}C\n" f"Т подачи по графику: {par_5}{degree_sign}C\n" f"Т обратки: {par_6}{degree_sign}C\n" f"---\n"
-
-
-print(get_temperature())
