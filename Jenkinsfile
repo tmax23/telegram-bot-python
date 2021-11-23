@@ -10,21 +10,6 @@ pipeline {
 
   stages {
 
-	  stage('Build docker image') {
-      steps {
-        script {
-          sh "echo 'ENV_API_TOKEN=${TG_BOT_TOKEN}' > ./.env"
-          sh "echo 'OWEN_API_TOKEN=${OWEN_API_TOKEN}' >> ./.env"
-
-          withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-            sh "docker build -t ${IMAGE_NAME} ."
-            sh "echo $PASS | docker login -u $USER --password-stdin"
-            sh "docker push ${IMAGE_NAME}"
-          }
-				}
-      }
-    }
-
     stage('Provision server on AWS') {
       environment {
         AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
@@ -50,6 +35,22 @@ pipeline {
       }
     }
 
+    stage('Build docker image') {
+      steps {
+        script {
+          sh "echo 'ENV_API_TOKEN=${TG_BOT_TOKEN}' > ./.env"
+          sh "echo 'OWEN_API_TOKEN=${OWEN_API_TOKEN}' >> ./.env"
+          sh "echo 'EC2_IP_ADDRESS=${EC2_PUBLIC_IP}' >> ./.env"
+
+          withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+            sh "docker build -t ${IMAGE_NAME} ."
+            sh "echo $PASS | docker login -u $USER --password-stdin"
+            sh "docker push ${IMAGE_NAME}"
+          }
+        }
+      }
+    }
+
 		stage('Deploy to EC2') {
 			steps {
 				script {
@@ -69,8 +70,6 @@ pipeline {
             def curlCmd = "curl -F ${botUrl} -F ${certPath} https://api.telegram.org/bot${TG_BOT_TOKEN}/setWebhook"
             def curlCmdClean = "curl -F 'url=' https://api.telegram.org/bot${TG_BOT_TOKEN}/setWebhook"
             def opensslCmd = "openssl req -newkey rsa:2048 -sha256 -nodes -keyout ./cert/private.key -x509 -days 365 -out ./cert/public.pem -subj ${subj}"
-
-              sh "echo 'EC2_IP_ADDRESS=${EC2_PUBLIC_IP}' >> ./.env"
 
             sshagent(['my-ssh-key']) {
               sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} 'mkdir -p /home/ec2-user/cert'"
