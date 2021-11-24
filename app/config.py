@@ -10,7 +10,7 @@ ENV = os.environ['ENV']
 
 # webhook settings
 if ENV == "dev":
-    WEBHOOK_HOST = 'https://6a48-37-23-44-206.ngrok.io'
+    WEBHOOK_HOST = 'https://203f-95-167-217-2.ngrok.io'
 else:
     WEBHOOK_HOST = EXT_IP
 
