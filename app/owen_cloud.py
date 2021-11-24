@@ -27,7 +27,7 @@ def get_atp(token):
     ts = int(resp.json()[0]['values'][0]['d']) + 7 * 3600
     date_last_update = datetime.utcfromtimestamp(ts).strftime('%d.%m.%Y %H:%M')
 
-    header = f"АТП, г. Барнаул, ул. Г.Исакова, д. 175\n" \
+    header = f"АТП, г. Барнаул, ул. Г. Исакова, д. 175\n" \
              f"Время последнего обновления параметров: {date_last_update}\n"
 
     delimit = "---\n"
