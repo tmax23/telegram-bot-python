@@ -13,7 +13,7 @@ def get_atp(token):
     headers["Content-Type"] = "application/json"
 
     data = '{"ids":[1123759,1123741,1123749,1123743,1123747,1123757,1123745]}'
-    resp = requests.post(url, headers=headers, data=data)
+    resp = requests.post(url, headers=headers, data=data).json()
 
     name_param = {"1123759": "запуск/останов контура",
                   "1123741": "датчик аварии насосов (Вх. С5)",
@@ -24,7 +24,7 @@ def get_atp(token):
                   "1123745": "t обратки, \N{DEGREE SIGN}C"
                   }
 
-    ts = int(resp.json()[0]['values'][0]['d']) + 7 * 3600
+    ts = int(resp[0]['values'][0]['d']) + 7 * 3600
     date_last_update = datetime.utcfromtimestamp(ts).strftime('%d.%m.%Y %H:%M')
 
     header = f"АТП, г. Барнаул, ул. Г. Исакова, д. 175\n" \
@@ -34,9 +34,9 @@ def get_atp(token):
 
     pars = []
 
-    for ind in range(len(resp.json())):
-        name = name_param[str(resp.json()[ind]['id'])]
-        value = resp.json()[ind]['values'][0]['v']
+    for ind in range(len(resp)):
+        name = name_param[str(resp[ind]['id'])]
+        value = resp[ind]['values'][0]['v']
         pars.append({
             'name': name,
             'value': value

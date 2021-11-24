@@ -19,7 +19,7 @@ dp.middleware.setup(LoggingMiddleware())
 async def create_deeplink(message: types.Message):
     msg1 = f"Привет, твой ID {message.chat.id}\n"
     msg2 = f"У меня пока только одна команда - /myatp\n"
-    return SendMessage(message.chat.id, msg1+msg2)
+    return SendMessage(message.chat.id, msg1 + msg2)
 
 
 @dp.message_handler(commands='myatp')
