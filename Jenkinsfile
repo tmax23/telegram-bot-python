@@ -18,7 +18,7 @@ pipeline {
     stage('Provision server on AWS') {
       when {
         expression {
-          ${params.Action} == 'Create all and run Telegram Bot'
+          params.Action == 'Create all and run Telegram Bot'
         }
       }
       environment {
@@ -48,7 +48,7 @@ pipeline {
     stage('Build docker image') {
       when {
         expression {
-          ${params.Action} == 'Create all and run Telegram Bot'
+          params.Action == 'Create all and run Telegram Bot'
         }
       }
       steps {
@@ -70,7 +70,7 @@ pipeline {
 		stage('Deploy to EC2') {
       when {
         expression {
-          ${params.Action} == 'Create all and run Telegram Bot'
+          params.Action == 'Create all and run Telegram Bot'
         }
       }
 			steps {
@@ -112,7 +112,7 @@ pipeline {
     stage('Destroy server on AWS') {
       when {
         expression {
-          ${params.Action} == 'Destroy all'
+          params.Action == 'Destroy all'
         }
       }
       environment {
@@ -133,7 +133,7 @@ pipeline {
     stage('Deploy only app: get  IP') {
       when {
         expression {
-          ${params.Action} == 'Deploy only app'
+          params.Action == 'Deploy only app'
         }
       }
       environment {
@@ -159,7 +159,7 @@ pipeline {
   stage('Deploy only app: build docker image') {
     when {
       expression {
-        ${params.Action} == 'Deploy only app'
+        params.Action == 'Deploy only app'
       }
     }
     steps {
@@ -181,7 +181,7 @@ pipeline {
   stage('Deploy only app: deploy to EC2') {
     when {
       expression {
-        ${params.Action} == 'Deploy only app'
+        params.Action == 'Deploy only app'
       }
     }
     steps {
