@@ -15,7 +15,7 @@ pipeline {
 
   stages {
 
-    stage('Provision server on AWS') {
+    stage('Creating, all steps: provision server on AWS') {
       when {
         expression {
           params.Action == 'Create all and run Telegram Bot'
@@ -45,7 +45,7 @@ pipeline {
       }
     }
 
-    stage('Build docker image') {
+    stage('Creating, all steps: build docker image') {
       when {
         expression {
           params.Action == 'Create all and run Telegram Bot'
@@ -67,7 +67,7 @@ pipeline {
       }
     }
 
-		stage('Deploy to EC2') {
+		stage('Creating, all steps: deploy to EC2') {
       when {
         expression {
           params.Action == 'Create all and run Telegram Bot'
