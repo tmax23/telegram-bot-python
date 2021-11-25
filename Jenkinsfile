@@ -130,7 +130,7 @@ pipeline {
       }
     }
 
-    stage('Get  IP') {
+    stage('Deploy only app: get  IP') {
       when {
         expression {
           ${params.Action} == 'Deploy only app'
@@ -156,7 +156,7 @@ pipeline {
     }
 
 
-  stage('Build docker image') {
+  stage('Deploy only app: build docker image') {
     when {
       expression {
         ${params.Action} == 'Deploy only app'
@@ -178,7 +178,7 @@ pipeline {
     }
   }
 
-  stage('Deploy to EC2') {
+  stage('Deploy only app: deploy to EC2') {
     when {
       expression {
         ${params.Action} == 'Deploy only app'
