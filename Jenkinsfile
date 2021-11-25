@@ -11,6 +11,9 @@ pipeline {
 	  IMAGE_NAME = 'tmax23/tg-bot-py:latest'
     TG_BOT_TOKEN = credentials('tg-bot-token')
     OWEN_API_TOKEN = credentials('owen-token')
+
+    AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
+    AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
 	}
 
   stages {
@@ -20,10 +23,6 @@ pipeline {
         expression {
           params.Action == 'Create all and run Telegram Bot'
         }
-      }
-      environment {
-        AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
       }
 
       steps {
@@ -115,15 +114,10 @@ pipeline {
           params.Action == 'Destroy all'
         }
       }
-      environment {
-        AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
-      }
 
       steps {
         script {
           dir ('terraform') {
-            sh "terraform init"
             sh "terraform destroy -auto-approve"
           }
         }
@@ -136,11 +130,7 @@ pipeline {
           params.Action == 'Deploy only app'
         }
       }
-      environment {
-        AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
-      }
-
+    
       steps {
         script {
           dir ('terraform') {
